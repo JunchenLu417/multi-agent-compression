@@ -1,0 +1,10 @@
+.idea
+.DS_Store
+__pycache__/
+*.py[cod]
+*.egg-info/
+*example.png
+wandb/
+/tmp/
+/outputs/
+/benchmark/scbench/results/
