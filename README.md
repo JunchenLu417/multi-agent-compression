@@ -38,13 +38,19 @@ state kept out of `utils/`).
 
 ### Install
 
+uv will refer to pyproject.toml and uv.lock to restore the project environment.
+
 ```bash
-conda create -n svllm python=3.10 -y
-conda activate svllm
-pip install torch==2.8.0 transformers[torch]==4.53.3 accelerate deepspeed==0.15.4 torchvision datasets==4.1.0
-pip install fire matplotlib seaborn wandb loguru ansible
-MAX_JOBS=8 pip install flash-attn --no-build-isolation
-pip install -e .
+# create and start the uv environment
+uv venv --python 3.10
+source .venv/bin/activate
+
+# install the packages
+MAX_JOBS=8 uv sync --preview-features extra-build-dependencies
+
+# verify the installation
+uv pip list | grep deltakv
+# output: deltakv                  0.1.0        /home/james/Sparse-vLLM
 ```
 
 ### Minimal usage

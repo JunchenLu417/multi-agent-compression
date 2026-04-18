@@ -7,18 +7,18 @@ name = "deltakv"
 version = "0.1.0"
 description = "DeltaKV: Compressing KV Cache for Efficient Inference"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license = {text = "Apache-2.0"}
 authors = [
     {name = "DeltaKV Team"}
 ]
 dependencies = [
     "fire",
-    "torch",
+    "torch==2.8.0",
     "transformers[torch]==4.53.3",
     "accelerate",
-    "deepspeed",
-    "datasets",
+    "deepspeed==0.15.4",
+    "datasets==4.1.0",
     "matplotlib",
     "seaborn",
     "wandb",
@@ -27,7 +27,6 @@ dependencies = [
     "flash-attn",
     "datatrove",
     "tqdm",
-    "loguru",
 ]
 
 [project.scripts]
@@ -36,3 +35,10 @@ deltakv-train = "deltakv.train_compressor:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["deltakv*", "sparsevllm*"]
+
+[tool.uv.extra-build-dependencies]
+flash-attn = [{ requirement = "torch", match-runtime = true }]
+deepspeed = ["torch==2.8.0"]
+
+[tool.uv]
+no-build-isolation-package = ["flash-attn"]
