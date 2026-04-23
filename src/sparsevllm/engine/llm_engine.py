@@ -237,8 +237,8 @@ class LLMEngine:
                     p.terminate()
                 p.join()
 
-    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
-        """将一个新的推理请求加入系统"""
+    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams) -> int:
+        """将一个新的推理请求加入系统，并返回 seq_id。"""
         if isinstance(prompt, str):
             prompt = self.tokenizer.encode(prompt)
         prompt_len = len(prompt)
@@ -252,6 +252,7 @@ class LLMEngine:
         logger.debug(f'add prompt with {len(prompt)} tokens.')
         seq = Sequence(prompt, sampling_params)
         self.scheduler.add(seq)
+        return seq.seq_id
 
     def step(self):
         """
